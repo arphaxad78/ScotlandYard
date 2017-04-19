@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style type="text/css" media="screen">
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas, img { display:block; margin:1em auto; border:1px solid black; }
+      canvas { background:url(sy_map_full_3.jpg) }
+    </style>
+
+
+
+  </head>
+  <body>
+    <canvas id="myCanvas" width="3836" height="2876"></canvas>
+    <textarea id="myOutput" rows="10" cols="150"></textarea>
+    <button id="cmdCircle1">Circle + 1</button>
+    <button id="cmdCircle10">Circle + 10</button>
+    <button id="cmdCircle100">Circle + 100</button>
+    <form action="/action_page.php">
+  First name:<br>
+  <input type="text" name="firstname" value="Mickey"><br>
+  Last name:<br>
+  <input type="text" name="lastname" value="Mouse"><br><br>
+  <input type="submit" value="Submit">
+  <input type="reset">
+</form>
+    <script type="text/javascript" src="mappings.js"></script>
+    <script type="text/javascript" src="graphics.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+
+      var i = 0;
+      //DrawCircleAtLocation(context, 1, "red", 1);
+      //DrawCircleAtLocation(context, 2, "green", 1);
+      //DrawCircleAtLocation(context, 3, "blue", 1);
+
+
+
+
+      $(document).ready(function(){
+          $("canvas").click(function(e){
+              //$("#myOutput").append(",[" + (e.pageX - 615) + ", " + (e.pageY - 45) + "]");
+              $("#myOutput").append(",[" + (e.pageX) + ", " + (e.pageY - 45) + "]");
+          });
+          $("#cmdCircle1").click(function(e){
+              ClearCanvas(context, canvas);
+              i++;
+              DrawCircleAtLocation(context, i, "green", 1);
+              var nodes = GetNodeInformation(i);
+              for (j = 0; j < nodes.length; j++)
+              {
+                DrawCircleAtLocation(context, nodes[j][0], "red", 1);
+              }
+          });
+          $("#cmdCircle10").click(function(e){
+            ClearCanvas(context, canvas);
+            i = i + 10;
+            DrawCircleAtLocation(context, i, "green", 1);
+            var nodes = GetNodeInformation(i);
+            for (j = 0; j < nodes.length; j++)
+            {
+              DrawCircleAtLocation(context, nodes[j][0], "red", 1);
+            }
+          });
+          $("#cmdCircle100").click(function(e){
+            ClearCanvas(context, canvas);
+            i = i + 100;
+            DrawCircleAtLocation(context, i, "green", 1);
+            var nodes = GetNodeInformation(i);
+            for (j = 0; j < nodes.length; j++)
+            {
+              DrawCircleAtLocation(context, nodes[j][0], "red", 1);
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

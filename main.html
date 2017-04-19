@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style type="text/css" media="screen">
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas, img { margin:1em auto; border:1px solid black; }
+      canvas { background:url(sy_map_full_3.jpg) }
+    </style>
+
+
+
+  </head>
+  <body>
+    <canvas id="myCanvas" width="3836" height="2876"></canvas>
+
+    <p>Red Player: <input type="text" id="red_player">
+    Yellow Player: <input type="text" id="yellow_player">
+    Green Player: <input type="text" id="green_player">
+    Blue Player: <input type="text" id="blue_player">
+    <button id="cmdNextTurn">Next Turn</button></p>
+    <textarea id="myOutput" rows="10" cols="150"></textarea>
+    <!-- <button id="cmdCircle1">Circle + 1</button>
+    <button id="cmdCircle10">Circle + 10</button>
+    <button id="cmdCircle100">Circle + 100</button> -->
+    <script type="text/javascript" src="mappings.js"></script>
+    <script type="text/javascript" src="graphics.js"></script>
+    <script type="text/javascript" src="game_logic.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var thisGameState = new GameState();
+      var mrxmap = [];
+      mrxmap.push(thisGameState.mrx_location);
+      var x = PlayNextTurn(thisGameState);
+      mrxmap.push(thisGameState.mrx_location);
+      DrawGameState(thisGameState, context, canvas);
+      DrawHeatMap(thisGameState.finalHeatMap, context);
+      $("#myOutput").append(thisGameState.message);
+
+      $(document).ready(function(){
+          $("#cmdNextTurn").click(function(e){
+              var red_turn = $('#red_player')[0].value;
+              var yellow_turn = $('#yellow_player')[0].value;
+              var green_turn = $('#green_player')[0].value;
+              var blue_turn = $('#blue_player')[0].value;
+
+              var thisTurn = new GameTurn(parseInt(red_turn), parseInt(yellow_turn), parseInt(green_turn), parseInt(blue_turn));
+              x = PlayNextTurn(thisGameState, thisTurn);
+              if (x == 0) {
+                DrawGameState(thisGameState, context, canvas);
+                $('#red_player').val("");
+                $('#yellow_player').val("");
+                $('#green_player').val("");
+                $('#blue_player').val("");
+                mrxmap.push(thisGameState.mrx_location);
+              }
+              else if (x == 1) {
+                DrawGameState(thisGameState, context, canvas);
+                DrawCircleAtLocation(context, thisGameState.mrx_location, "black", 2);
+
+                mrxmap.push(thisGameState.mrx_location);
+                DrawHeatMap(thisGameState.finalHeatMap, context);
+              }
+              //DrawCircleAtLocation(context, thisGameState.mrx_location, "black", 2); // temp
+              $("#myOutput").prepend(thisGameState.message + "\r");
+
+          });
+          // $("canvas").click(function(e){
+          //     //$("#myOutput").append(",[" + (e.pageX - 615) + ", " + (e.pageY - 45) + "]");
+          //     $("#myOutput").append(",[" + (e.pageX) + ", " + (e.pageY - 45) + "]");
+          // });
+          // $("#cmdCircle1").click(function(e){
+          //     ClearCanvas(context, canvas);
+          //     i++;
+          //     DrawCircleAtLocation(context, i, "green", 1);
+          //     var nodes = GetNodeInformation(i);
+          //     for (j = 0; j < nodes.length; j++)
+          //     {
+          //       DrawCircleAtLocation(context, nodes[j][0], "red", 1);
+          //     }
+          // });
+          // $("#cmdCircle10").click(function(e){
+          //   ClearCanvas(context, canvas);
+          //   i = i + 10;
+          //   DrawCircleAtLocation(context, i, "green", 1);
+          //   var nodes = GetNodeInformation(i);
+          //   for (j = 0; j < nodes.length; j++)
+          //   {
+          //     DrawCircleAtLocation(context, nodes[j][0], "red", 1);
+          //   }
+          // });
+          // $("#cmdCircle100").click(function(e){
+          //   ClearCanvas(context, canvas);
+          //   i = i + 100;
+          //   DrawCircleAtLocation(context, i, "green", 1);
+          //   var nodes = GetNodeInformation(i);
+          //   for (j = 0; j < nodes.length; j++)
+          //   {
+          //     DrawCircleAtLocation(context, nodes[j][0], "red", 1);
+          //   }
+          // });
+      });
+    </script>
+  </body>
+</html>
