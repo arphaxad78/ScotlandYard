@@ -25,20 +25,25 @@
     <!-- <button id="cmdCircle1">Circle + 1</button>
     <button id="cmdCircle10">Circle + 10</button>
     <button id="cmdCircle100">Circle + 100</button> -->
-    <script type="text/javascript" src="mappings.js"></script>
+    <!-- <script type="text/javascript" src="mappings.js"></script> -->
+    <script type="text/javascript" src="mappings2.js"></script>
     <script type="text/javascript" src="graphics.js"></script>
     <script type="text/javascript" src="game_logic.js"></script>
+    <script type="text/javascript" src="C:\Users\Michael\github\DanScottsdaleYard\src\game\gameLogic.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script>
       var canvas = document.getElementById('myCanvas');
       var context = canvas.getContext('2d');
+
+      var test_object = GAME_LOGIC.CONSTS.NODES;
+
       var thisGameState = new GameState();
       var mrxmap = [];
-      mrxmap.push(thisGameState.mrx_location);
+      mrxmap.push(thisGameState.mrx_location);  // <-- this is for tracking and debugging only
       var x = PlayNextTurn(thisGameState);
-      mrxmap.push(thisGameState.mrx_location);
+      mrxmap.push(thisGameState.mrx_location);  // <-- this is for tracking and debugging only
       DrawGameState(thisGameState, context, canvas);
-      DrawHeatMap(thisGameState.finalHeatMap, context);
+      //DrawHeatMap(thisGameState.finalHeatMap, context);
       $("#myOutput").append(thisGameState.message);
 
       $(document).ready(function(){
