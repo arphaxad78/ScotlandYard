@@ -25,7 +25,7 @@
     <!-- <button id="cmdCircle1">Circle + 1</button>
     <button id="cmdCircle10">Circle + 10</button>
     <button id="cmdCircle100">Circle + 100</button> -->
-    <!-- <script type="text/javascript" src="mappings.js"></script> -->
+    <script type="text/javascript" src="mappings.js"></script>
     <script type="text/javascript" src="mappings2.js"></script>
     <script type="text/javascript" src="graphics.js"></script>
     <script type="text/javascript" src="game_logic.js"></script>
@@ -44,6 +44,30 @@
       mrxmap.push(thisGameState.mrx_location);  // <-- this is for tracking and debugging only
       DrawGameState(thisGameState, context, canvas);
       //DrawHeatMap(thisGameState.finalHeatMap, context);
+
+      // temp variable output
+      console.time("slow_run");
+      var testmap = [];
+      for(m = 0; m <= 10; m++) {
+       testmap.push(GenerateDistanceArray(m));
+      }
+      console.timeEnd("slow_run");
+
+      console.time("fast_run");
+      var testmap2 = [];
+      for(m = 0; m <= 10; m++) {
+       testmap2.push(GetHeatMapInformation(m));
+      }
+      console.timeEnd("fast_run");
+
+      console.time("dan_run");
+      var testmap3 = [];
+      for(m = 0; m <= 10; m++) {
+       testmap3.push(GAME_LOGIC._generateDistanceArray (m));
+      }
+      console.timeEnd("dan_run");
+
+      // end temp
       $("#myOutput").append(thisGameState.message);
 
       $(document).ready(function(){

@@ -259,9 +259,7 @@ function DiscoverNode(location, distance, DistanceArray) {
   for (var i = 0; i < nodes.length; i++)
   {
     var nextLocation = nodes[i][0];
-    if (nextLocation == 137) {
 
-    }
     if (DistanceArray[nextLocation] > distance + 1) {
       DiscoverNode(nextLocation, distance + 1, DistanceArray);
     }
